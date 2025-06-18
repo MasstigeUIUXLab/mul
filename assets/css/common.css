@@ -1,0 +1,664 @@
+/* Common CSS */
+.container {
+    max-width: 1220px;
+    margin: 0 auto;    
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
+}
+
+header a {
+    width: 70px;
+    height: 40px;
+}
+
+header nav ul {
+    display: flex;
+    gap: 100px;
+}
+
+header nav ul li a {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 100%; /* 18px */
+    color: #FFF;
+}
+
+header nav ul li:last-child a {
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+}
+
+.hamburger-menu {
+    display: none;
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+
+.section {
+    padding: 60px 0;
+}
+
+.section.case .content {
+    padding: 60px 0;
+}
+
+.section.case-detail .content {
+    padding: 0;
+}
+
+.title {
+    text-align: center;
+}
+
+.title h1 {
+    width: auto;
+    height: 250px;
+}
+
+.title h2 {
+    margin-top: 20px;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: 100%; /* 60px */
+    letter-spacing: -0.6px;
+    color: #B3B3B3;
+}
+
+/* main */
+.main-section {
+    position: relative;
+    padding: 26px 0 0 0;
+    min-height: calc(100vh - 100px); /* 헤더 높이를 제외한 전체 높이 */
+}
+
+.main-section .hero-animation {
+    width: 977px;
+    height: 598px;
+    text-align: center;
+}
+
+.main-section .hero-animation img {
+    position: absolute;
+    top:26px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    max-width: 100%;
+    height: auto;
+}
+
+.main-section .hero-animation img.active {
+    opacity: 1;
+}
+
+.main-section .bnr-case-container {
+    width: 977px;
+    margin: 60px auto 0;
+    text-align: right;
+}
+.main-section .bnr-case {
+    display: block;
+    margin-right: 44px;
+}
+
+/* case */
+.case-list {
+    margin-top: 80px;
+}
+
+.case-list .case-item {
+    width: 100%; 
+    height: 220px;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(192, 192, 192, 0.40);
+    position: relative;
+}
+
+.case-list .case-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.case-list .case-item:hover::after {
+    opacity: 1;
+    animation: borderAnimation 1.5s linear forwards;
+}
+
+@keyframes borderAnimation {
+    0% {
+        clip-path: inset(0 0 95% 0);
+    }
+    25% {
+        clip-path: inset(0 0 0 95%);
+    }
+    50% {
+        clip-path: inset(95% 0 0 0);
+    }
+    75% {
+        clip-path: inset(0 95% 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 0 0);
+        opacity: 0;
+    }
+}
+
+.case-list .case-item:not(:first-child) {
+    margin-top: 30px;
+}
+
+.case-list .case-item a {    
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: block;
+}
+
+.case-list .case-item a::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(22, 23, 22, 0.60);
+    z-index: 10;
+}
+
+.case-list .case-item a:hover::before {
+    content: none;
+}
+
+.case-list .case-item a .case-item-img {
+    width: 100%;
+    height: 100%;    
+}
+
+.case-list .case-item a .case-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.case-list .case-item a .case-item-info {
+    width: 100%;
+    height: 100%;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;    
+    z-index: 20;
+}
+
+.case-list .case-item a .case-item-info .case-item-info-img {
+    position: relative;
+    text-align: center;
+}
+
+.case-list .case-item a .case-item-info .case-item-info-img .logo {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.case-list .case-item a .case-item-info .case-item-info-img .icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.case-list .case-item a .case-item-info p {
+    align-self: center;
+    margin-top: 10px;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: 120%; /* 48px */
+    letter-spacing: -0.4px;
+    color: #ECECEC;
+}
+.case-list .case-item a .case-item-info p strong {
+    font-weight: 600;
+}
+
+.small-case-list {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 100px;
+}
+
+.small-case-list li {
+    width: calc(50% - 10px);
+    text-align: right;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: 120%;
+    letter-spacing: -0.4px;
+    color: rgba(236, 236, 236, 0.40);
+    border-bottom: 2px dashed rgba(192, 192, 192, 0.40);
+}
+
+.small-case-list li:nth-child(n+3) {
+    margin-top: 80px;
+}
+
+.small-case-list li a {
+    display: block;
+    width: 100%;
+    height: 100%;    
+}
+
+.small-case-list li strong {
+    font-weight: 600;
+}
+
+/* case_detail */
+.case-detail-top {
+    height: 765px;
+    position: relative;
+    margin-top: 96px;
+}
+
+.case-detail-top-info {
+    width: 440px;
+}
+
+.case-detail-top-info h2 {
+    font-size: 80px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 96px */
+    letter-spacing: -0.8px;
+    color: #FFF;
+}
+
+.case-detail-top-info p {
+    margin-top: 30px;
+    font-size: 46px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: 120%; /* 55.2px */
+    letter-spacing: -0.46px;
+    color: #ECECEC;
+    text-align: justify;
+}
+
+.case-detail-top-info p strong {
+    font-weight: 600;
+}
+
+.case-detail-top-img {
+    width: 539px;    
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: transform 0.6s ease-out;
+    transform: rotate(120deg);
+}
+
+.case-detail-content {
+    padding-top: 71px;
+    border-top: 4px dashed rgba(192, 192, 192, 0.40);
+}
+
+.case-detail-content-item {
+    position: relative;
+}
+
+.case-detail-content-item:not(:first-child) {
+    margin-top: -100px;
+}
+
+.case-detail-content-item:nth-child(even) {
+    text-align: right;
+}
+.case-detail-content-item:nth-child(odd) {
+    text-align: left;
+}
+
+.case-detail-content-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+.case-detail-content-item .typo {
+    position: absolute;
+    top: 50%;
+    opacity: 0;
+    transform: translate(0, 100px);
+    transition: all 0.8s ease-out;
+    will-change: transform, opacity; /* 성능 최적화 */
+}
+
+.case-detail-content-item:nth-child(even) .typo {    
+    left: -175px;
+    
+}
+.case-detail-content-item:nth-child(odd) .typo {
+    right: -175px;
+
+}
+
+/* 활성화된 요소의 최종 위치 */
+.case-detail-content-item .typo.active {
+    opacity: 1;
+    transform: translate(0, -50%);
+}
+
+/* lab */
+.section.lab .content {
+    padding-top: 80px;
+    text-align: center;
+}
+
+.section.lab .content img {
+    max-width: 100%;
+    height: auto;
+}
+
+.section.lab .content div {
+    width: 1220px;
+    height: 1494px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.section.lab .content div span img {
+    position: absolute;
+    opacity: 0;
+    transform: translateY(100px) scale(0.55);
+    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+/* 각 이미지의 위치 설정 */
+.section.lab .content div span img:nth-child(1) {
+    top: 494px;
+    left: 0;
+}
+.section.lab .content div span img:nth-child(2) {
+    top: 744px;
+    right: 0;
+}
+.section.lab .content div span img:nth-child(3) {
+    top: 994px;
+    left: 0;
+}
+.section.lab .content div span img:nth-child(4) {
+    top: 1244px;
+    right: 0;
+}
+
+/* 활성화된 상태 */
+.section.lab .content div span img.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* 각 이미지별 지연 시간 설정 */
+.section.lab .content div span img:nth-child(1) {
+    transition-delay: 0.1s;
+}
+.section.lab .content div span img:nth-child(2) {
+    transition-delay: 0.2s;
+}
+.section.lab .content div span img:nth-child(3) {
+    transition-delay: 0.3s;
+}
+.section.lab .content div span img:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+/* contact */
+.address-info {
+    margin-top: 80px;
+    text-align: center;
+}
+
+.address-info strong {
+    margin-top: 50px;
+    display: block;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 110%; /* 39.6px */
+    color: #FFF;
+}
+
+.address-info p {
+    margin-top: 24px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 100% */
+    color: #ECECEC;
+}
+
+.address-info p.txt_eng {
+    margin-top: 12px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 125% */
+    color: #999;
+}
+
+.contact-info {
+    margin-top: 120px;
+    padding: 0 140px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact-info div {
+    text-align: center;
+}
+
+.contact-info div > img {
+    width: 80px;
+    height: 80px;
+}
+
+.contact-info div p {
+    margin-top: 20px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: 64px; /* 160% */
+    color: #ECECEC;
+    text-align: center;
+}
+
+.contact-info div span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.contact-info div span a {
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%; /* 57.6px */
+    color: #FFF;
+}
+
+.contact-info div span button {
+    width: 40px;
+    height: 40px;
+    background: url('../img/contact/icon_copy.png') no-repeat center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contact-info button.copied {
+    background: url('../img/contact/icon_copy.png') no-repeat center;
+    background-size: contain;
+    transform: scale(1.2);
+}
+
+.contact-info-bottom {
+    position: relative;
+    margin-top: 100px;
+    padding: 100px 350px;
+    display: flex;
+    justify-content: center;
+}
+
+.contact-info-bottom::before {
+    content: '';
+    display: block;
+    width: 1220px;
+    height: 4px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top: 4px dashed rgba(192, 192, 192, 0.40);
+}
+
+.contact-info-bottom div {
+    text-align: center;
+}
+
+.contact-info-bottom div > img {
+    width: 80px;
+    height: 80px;
+}
+
+.contact-info-bottom div p {
+    margin-top: 20px;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: 160%; /* 51.2px */
+    color: #ECECEC;
+}
+
+.contact-info-bottom div span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.contact-info-bottom div span a {
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%; /* 57.6px */
+    color: #FFF;
+}
+
+.contact-info-bottom div span button {
+    width: 40px;
+    height: 40px;
+    background: url('../img/contact/icon_copy.png') no-repeat center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contact-info-bottom button.copied {
+    background: url('../img/contact/icon_copy.png') no-repeat center;
+    background-size: contain;
+    transform: scale(1.2);
+}
+
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    display: none;
+    z-index: 1000;
+}
+
+.toast-message.show {
+    display: block;
+    animation: fadeInOut 2.5s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+
+/* mobile */
+@media screen and (max-width: 768px) {
+    .hamburger-menu {
+        display: block;
+    }
+
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background-color: #fff;
+        padding: 60px 20px;
+        transition: right 0.3s ease;
+    }
+
+    .main-nav.active {
+        right: 0;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+    }
+
+    .main-nav li {
+        margin: 15px 0;
+    }
+}
