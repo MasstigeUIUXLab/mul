@@ -38,6 +38,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Case Detail Content Items 스크롤 애니메이션
+    const caseDetailItems = document.querySelectorAll('.case-detail-content-item');
+    if (caseDetailItems.length > 0) {
+        const observerOptions = {
+            root: null,
+            rootMargin: '-10% 0px', // 요소가 10% 보이기 시작할 때 애니메이션 시작
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // 지연 시간을 주어 순차적으로 나타나도록 함
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 200); // 각 아이템마다 200ms씩 지연
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        caseDetailItems.forEach(item => {
+            observer.observe(item);
+        });
+    }
+
     // Lab 페이지 이미지 애니메이션
     const labImages = document.querySelectorAll('.section.lab .content div span img');
     if (labImages.length > 0) {

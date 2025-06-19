@@ -35,29 +35,8 @@ header nav ul li:last-child a {
     color: #666;
 }
 
-.hamburger-menu {
-    display: none;
-    background: none;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.hamburger-menu span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: #000;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-}
-
 
 .section {
-    padding: 60px 0;
-}
-
-.section.case .content {
     padding: 60px 0;
 }
 
@@ -83,6 +62,23 @@ header nav ul li:last-child a {
     letter-spacing: -0.6px;
     color: #B3B3B3;
 }
+
+footer {
+    height: 200px;
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #070705;
+}
+
+footer p {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%;
+    color: rgba(236, 236, 236, 0.40);
+} 
 
 /* main */
 .main-section {
@@ -131,7 +127,7 @@ header nav ul li:last-child a {
     width: 100%; 
     height: 220px;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 2px;
     border: 1px solid rgba(192, 192, 192, 0.40);
     position: relative;
 }
@@ -144,7 +140,7 @@ header nav ul li:last-child a {
     right: 0;
     bottom: 0;
     border: 2px solid #fff;
-    border-radius: 20px;
+    border-radius: 2px;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -307,6 +303,10 @@ header nav ul li:last-child a {
     line-height: 120%; /* 96px */
     letter-spacing: -0.8px;
     color: #FFF;
+}
+
+.case-detail-top-info h2.blind {
+    display: none;
 }
 
 .case-detail-top-info p {
@@ -482,7 +482,6 @@ header nav ul li:last-child a {
 
 .contact-info {
     margin-top: 120px;
-    padding: 0 140px;
     display: flex;
     justify-content: space-between;
 }
@@ -499,10 +498,10 @@ header nav ul li:last-child a {
 .contact-info div p {
     margin-top: 20px;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-size: 40px;
+    font-size: 30px;
     font-style: normal;
     font-weight: 100;
-    line-height: 64px; /* 160% */
+    line-height: 160%; /* 160% */
     color: #ECECEC;
     text-align: center;
 }
@@ -515,7 +514,7 @@ header nav ul li:last-child a {
 }
 
 .contact-info div span a {
-    font-size: 36px;
+    font-size: 30px;
     font-style: normal;
     font-weight: 600;
     line-height: 160%; /* 57.6px */
@@ -550,12 +549,12 @@ header nav ul li:last-child a {
     content: '';
     display: block;
     width: 1220px;
-    height: 4px;
+    height: 2px;
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    border-top: 4px dashed rgba(192, 192, 192, 0.40);
+    border-top: 2px dashed rgba(192, 192, 192, 0.40);
 }
 
 .contact-info-bottom div {

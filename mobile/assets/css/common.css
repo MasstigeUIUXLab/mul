@@ -118,10 +118,6 @@ header a {
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-.section {
-    
-}
-
 .section.case .content {
     padding: 0 2rem;
 }
@@ -385,6 +381,16 @@ footer p {
     position: absolute;
     top: 0;
     right: -3rem;
+    animation: floating 2s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .case-detail-content {
@@ -394,6 +400,14 @@ footer p {
 
 .case-detail-content-item {
     position: relative;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.case-detail-content-item.active {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .case-detail-content-item:not(:first-child) {
