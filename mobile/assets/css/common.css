@@ -659,14 +659,16 @@ footer p {
 }
 
 .toast-message {
+    width: calc(100% - 4rem);
+    text-align: center;
     position: fixed;
-    bottom: 20px;
+    bottom: 8rem;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #070705;
+    padding: 2.2rem 2.4rem;
+    border-radius: 0.4rem;
     display: none;
     z-index: 1000;
 }
@@ -674,6 +676,11 @@ footer p {
 .toast-message.show {
     display: block;
     animation: fadeInOut 2.5s ease-in-out;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%; /* 57.6px */
+    color: #070705;
 }
 
 @keyframes fadeInOut {
@@ -719,11 +726,12 @@ footer p {
 
 
 .swiper-slide {
-    width: 28.6rem;
+    width: 100%;
     height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 }
 
 .swiper-slide h3 {

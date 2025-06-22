@@ -1,6 +1,7 @@
-// Main JavaScript
+// 문서가 로드되면 실행되는 메인 JavaScript 코드
 document.addEventListener('DOMContentLoaded', function() {
-    // 메인 페이지 이미지 교차 애니메이션
+    // 메인 페이지의 히어로 이미지 자동 전환 애니메이션
+    // .hero-animation 내부의 모든 이미지를 3초마다 순차적으로 페이드인/아웃
     const heroImages = document.querySelectorAll('.hero-animation img');
     if (heroImages.length > 0) {
         let currentIndex = 0;
@@ -12,48 +13,25 @@ document.addEventListener('DOMContentLoaded', function() {
             currentIndex = (currentIndex + 1) % heroImages.length;
         }
         
-        setInterval(toggleImages, 3000);
+        setInterval(toggleImages, 3000); // 3초마다 이미지 전환
     }
 
-    // Case Detail 페이지 스크롤 애니메이션
-    const typoElements = document.querySelectorAll('.case-detail-content .typo');
-    if (typoElements.length > 0) {
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        typoElements.forEach(typo => {
-            observer.observe(typo);
-        });
-    }
-
-    // Case Detail Content Items 스크롤 애니메이션
+    // Case Detail 페이지의 콘텐츠 아이템 스크롤 애니메이션
+    // 각 아이템이 화면에 나타날 때 순차적으로 페이드인 되는 효과
     const caseDetailItems = document.querySelectorAll('.case-detail-content-item');
     if (caseDetailItems.length > 0) {
         const observerOptions = {
             root: null,
-            rootMargin: '-10% 0px', // 요소가 10% 보이기 시작할 때 애니메이션 시작
+            rootMargin: '-10% 0px', // 상단에서 10% 지점에서 트리거
             threshold: 0.1
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    // 지연 시간을 주어 순차적으로 나타나도록 함
                     setTimeout(() => {
                         entry.target.classList.add('active');
-                    }, index * 200); // 각 아이템마다 200ms씩 지연
+                    }, index * 200); // 각 아이템마다 200ms 딜레이로 순차 등장
                     
                     observer.unobserve(entry.target);
                 }
@@ -65,77 +43,35 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Lab 페이지 이미지 애니메이션
-    const labImages = document.querySelectorAll('.section.lab .content div span img');
-    if (labImages.length > 0) {
-        const observerOptions = {
-            root: null,
-            rootMargin: '-10% 0px', // 요소가 10% 보이기 시작할 때 애니메이션 시작
-            threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] // 더 부드러운 애니메이션을 위한 임계값
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // 요소가 화면에 들어올 때
-                    entry.target.classList.add('active');
-                    
-                    // 스크롤 위치에 따른 추가 애니메이션
-                    const handleScroll = () => {
-                        const rect = entry.target.getBoundingClientRect();
-                        const scrollProgress = 1 - (rect.top / window.innerHeight);
-                        
-                        if (scrollProgress > 0 && scrollProgress < 1) {
-                            entry.target.style.transform = `translateY(${scrollProgress * -50}px) scale(${1 + scrollProgress * 0.05})`;
-                        }
-                    };
-
-                    window.addEventListener('scroll', handleScroll);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        labImages.forEach(img => {
-            observer.observe(img);
-        });
-    }
-
-    
-
-    // 클립보드 복사 기능
-
-    // 토스트 메시지 기능
+    // 클립보드 복사 및 토스트 메시지 기능
+    // 버튼 클릭 시 텍스트를 클립보드에 복사하고 알림 메시지를 표시
     const copyButtons = document.querySelectorAll('.copy-btn');
     const toastMessage = document.querySelector('.toast-message');
     
     copyButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // 버튼의 형제 요소인 a 태그의 텍스트 가져오기
             const textToCopy = button.previousElementSibling.textContent;
             
-            // 클립보드에 복사
             navigator.clipboard.writeText(textToCopy).then(() => {
-                // 복사 성공 시 버튼 스타일 변경 (선택사항)
                 button.classList.add('copied');
                 
-                // 1초 후 버튼 스타일 원래대로 복구
                 setTimeout(() => {
                     button.classList.remove('copied');
-                }, 1000);
+                }, 1000); // 1초 후 복사 상태 표시 제거
             }).catch(err => {
                 console.error('클립보드 복사 실패:', err);
             });
 
+            // 토스트 메시지 표시 및 자동 숨김
             toastMessage.classList.add('show');
-            
-            // 2.5초 후 show 클래스 제거
             setTimeout(() => {
                 toastMessage.classList.remove('show');
-            }, 2500);
+            }, 2500); // 2.5초 후 토스트 메시지 숨김
         });
     });
 
+    // 모바일 메뉴 토글 기능
+    // 햄버거 메뉴 클릭 시 내비게이션 메뉴를 표시하고 닫기 버튼으로 숨김
     const hamburger = document.querySelector('.hamburger-menu');
     const closeBtn = document.querySelector('.close-menu');
     const nav = document.querySelector('.main-nav');

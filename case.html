@@ -6,6 +6,7 @@
     <title>매스티지 UX LAB</title>
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </head>
 <body>
     <div class="container">
@@ -29,7 +30,7 @@
                     <h2>UX 개선 및 구축 프로젝트</h2>
                 </div>
 
-                <div class="content">
+                <div class="content"> 
                     <div class="case-list">
                         <div class="case-item open">
                             <a href="case_detail/mois.html">
@@ -142,7 +143,31 @@
                         <li><a href="#"><strong>포스코 경제연구소</strong> 포털</a></li>
                         <li><a href="#"><strong>알리안츠 사이버센터</strong> 구축</a></li>
                         <li><a href="#"><strong>롯데제과 브랜드</strong> 포털</a></li>
-                    </ul>                    
+                    </ul>
+                    
+                    <div class="swiper">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                          <!-- Slides -->
+                          <div class="swiper-slide">
+                            <h3>efinance</h3>
+                            <img src="assets/img/case/img_swiper01.png" alt="">
+                          </div>
+                          <div class="swiper-slide">
+                            <h3>efinance</h3>
+                            <img src="assets/img/case/img_swiper01.png" alt="">
+                          </div>
+                          <div class="swiper-slide">
+                            <h3>efinance</h3>
+                            <img src="assets/img/case/img_swiper01.png" alt="">
+                          </div>
+                          ...
+                        </div>
+                      
+                        <!-- If we need navigation buttons -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
                 </div>                
             </section> 
         </main>
@@ -152,5 +177,26 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 20,
+        centeredSlides: false,
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+        },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        }
+        });
+    </script>
 </body>
 </html>
