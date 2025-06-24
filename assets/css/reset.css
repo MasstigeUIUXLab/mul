@@ -13,6 +13,16 @@ html, body {
     height: 100%;
 }
 
+html, body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* 스크롤 기능 유지하면서 스크롤바만 숨기기 */
 body {
     font-family: Pretendard;
     background-color: #070705;
