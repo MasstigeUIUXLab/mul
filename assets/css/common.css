@@ -295,9 +295,12 @@ footer p {
 
 /* case_detail */
 .case-detail-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 765px;
     position: relative;
-    margin-top: 96px;
+    margin-top: 100px;
 }
 
 .case-detail-top-info {
@@ -305,11 +308,10 @@ footer p {
 }
 
 .case-detail-top-info h2 {
-    font-size: 80px;
+    font-size: 48px;
     font-style: normal;
     font-weight: 600;
-    line-height: 120%; /* 96px */
-    letter-spacing: -0.8px;
+    line-height: 62px;
     color: #FFF;
 }
 
@@ -318,14 +320,12 @@ footer p {
 }
 
 .case-detail-top-info p {
-    margin-top: 30px;
-    font-size: 46px;
+    margin-top: 32px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 100;
-    line-height: 120%; /* 55.2px */
-    letter-spacing: -0.46px;
+    line-height: 28px;
     color: #ECECEC;
-    text-align: justify;
 }
 
 .case-detail-top-info p strong {
@@ -333,12 +333,8 @@ footer p {
 }
 
 .case-detail-top-img {
-    width: 539px;    
-    position: absolute;
-    top: 0;
-    right: 0;
-    transition: transform 0.6s ease-out;
-    transform: rotate(120deg);
+    width: 529px;
+    height: 708px; 
 }
 
 .case-detail-content {
@@ -362,17 +358,37 @@ footer p {
 }
 
 .case-detail-content-item img {
-    max-width: 100%;
+    width: fit-content;
     height: auto;
+}
+
+.case-detail-content-item .info {
+    position: relative;
+    top: 0;
+    opacity: 0;
+    transform: translate(0, 100px);
+    transition: all 0.8s ease-out;
+    will-change: transform, opacity; /* 성능 최적화 */
+}
+
+.case-detail-content-item .info.active {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+.case-detail-content-item:nth-child(even) .info {
+    right: -80px;
+}
+
+.case-detail-content-item:nth-child(odd) .info {
+    left: -80px;   
 }
 
 .case-detail-content-item .typo {
     position: absolute;
     top: 50%;
-    opacity: 0;
-    transform: translate(0, 100px);
-    transition: all 0.8s ease-out;
-    will-change: transform, opacity; /* 성능 최적화 */
+    transform: translate(0, -50%);
+   
 }
 
 .case-detail-content-item:nth-child(even) .typo {    
@@ -382,12 +398,6 @@ footer p {
 .case-detail-content-item:nth-child(odd) .typo {
     right: -175px;
 
-}
-
-/* 활성화된 요소의 최종 위치 */
-.case-detail-content-item .typo.active {
-    opacity: 1;
-    transform: translate(0, -50%);
 }
 
 /* lab */

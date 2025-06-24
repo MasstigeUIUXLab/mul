@@ -48,7 +48,7 @@ function initHeroAnimation() {
 // ========================================
 
 function initCaseDetailAnimation() {
-    const typoElements = document.querySelectorAll('.case-detail-content .typo');
+    const typoElements = document.querySelectorAll('.case-detail-content .info');
     if (typoElements.length === 0) return;
     
     const observerOptions = {
@@ -67,31 +67,6 @@ function initCaseDetailAnimation() {
     }, observerOptions);
 
     typoElements.forEach(typo => observer.observe(typo));
-}
-
-function initCaseDetailScrollAnimation() {
-    const topImage = document.querySelector('.case-detail-top-img');
-    if (!topImage) return;
-    
-    let lastScrollPosition = 0;
-    let isAnimationComplete = false;
-
-    window.addEventListener('scroll', () => {
-        const currentScrollPosition = window.scrollY;
-        
-        if (!isAnimationComplete && currentScrollPosition > lastScrollPosition) {
-            const maxScroll = 500;
-            const rotation = Math.min(currentScrollPosition / maxScroll * 120, 120);
-            
-            topImage.style.transform = `rotate(${-120 + rotation}deg)`;
-
-            if (currentScrollPosition >= maxScroll) {
-                isAnimationComplete = true;
-            }
-        }
-        
-        lastScrollPosition = currentScrollPosition;
-    });
 }
 
 // ========================================
@@ -188,8 +163,7 @@ function initMobileNavigation() {
 
 document.addEventListener('DOMContentLoaded', function() {
     initHeroAnimation();
-    initCaseDetailAnimation();
-    initCaseDetailScrollAnimation();
+    initCaseDetailAnimation();    
     initLabAnimation();
     initClipboardCopy();
     initMobileNavigation();
