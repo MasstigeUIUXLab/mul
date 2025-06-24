@@ -1,144 +1,196 @@
-// Main JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    // 메인 페이지 이미지 교차 애니메이션
+// ========================================
+// 모바일 디바이스 감지 및 리다이렉트
+// ========================================
+
+function checkMobileDevice() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const mobileRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
+    const isSmallScreen = window.innerWidth <= 768;
+    
+    return mobileRegex.test(userAgent) || isSmallScreen;
+}
+
+function redirectToMobile() {
+    const isMainPage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+    const isMobileDevice = checkMobileDevice();
+    const isNotAlreadyMobile = !window.location.pathname.includes('/mobile/');
+    
+    if (isMainPage && isMobileDevice && isNotAlreadyMobile) {
+        window.location.href = '/mobile/index.html';
+    }
+}
+
+// 페이지 로드 시 모바일 리다이렉트 체크
+redirectToMobile();
+
+// ========================================
+// 메인 애니메이션 기능
+// ========================================
+
+function initHeroAnimation() {
     const heroImages = document.querySelectorAll('.hero-animation img');
-    if (heroImages.length > 0) {
-        let currentIndex = 0;
-        heroImages[0].classList.add('active');
+    if (heroImages.length === 0) return;
+    
+    let currentIndex = 0;
+    heroImages[0].classList.add('active');
+    
+    function toggleImages() {
+        heroImages.forEach(img => img.classList.remove('active'));
+        heroImages[currentIndex].classList.add('active');
+        currentIndex = (currentIndex + 1) % heroImages.length;
+    }
+    
+    setInterval(toggleImages, 3000);
+}
+
+// ========================================
+// Case Detail 페이지 애니메이션
+// ========================================
+
+function initCaseDetailAnimation() {
+    const typoElements = document.querySelectorAll('.case-detail-content .typo');
+    if (typoElements.length === 0) return;
+    
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    typoElements.forEach(typo => observer.observe(typo));
+}
+
+function initCaseDetailScrollAnimation() {
+    const topImage = document.querySelector('.case-detail-top-img');
+    if (!topImage) return;
+    
+    let lastScrollPosition = 0;
+    let isAnimationComplete = false;
+
+    window.addEventListener('scroll', () => {
+        const currentScrollPosition = window.scrollY;
         
-        function toggleImages() {
-            heroImages.forEach(img => img.classList.remove('active'));
-            heroImages[currentIndex].classList.add('active');
-            currentIndex = (currentIndex + 1) % heroImages.length;
+        if (!isAnimationComplete && currentScrollPosition > lastScrollPosition) {
+            const maxScroll = 500;
+            const rotation = Math.min(currentScrollPosition / maxScroll * 120, 120);
+            
+            topImage.style.transform = `rotate(${-120 + rotation}deg)`;
+
+            if (currentScrollPosition >= maxScroll) {
+                isAnimationComplete = true;
+            }
         }
         
-        setInterval(toggleImages, 3000);
-    }
+        lastScrollPosition = currentScrollPosition;
+    });
+}
 
-    // Case Detail 페이지 스크롤 애니메이션
-    const typoElements = document.querySelectorAll('.case-detail-content .typo');
-    if (typoElements.length > 0) {
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
+// ========================================
+// Lab 페이지 애니메이션
+// ========================================
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        typoElements.forEach(typo => {
-            observer.observe(typo);
-        });
-    }
-
-    // Lab 페이지 이미지 애니메이션
+function initLabAnimation() {
     const labImages = document.querySelectorAll('.section.lab .content div span img');
-    if (labImages.length > 0) {
-        const observerOptions = {
-            root: null,
-            rootMargin: '-10% 0px', // 요소가 10% 보이기 시작할 때 애니메이션 시작
-            threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] // 더 부드러운 애니메이션을 위한 임계값
-        };
+    if (labImages.length === 0) return;
+    
+    const observerOptions = {
+        root: null,
+        rootMargin: '-10% 0px',
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // 요소가 화면에 들어올 때
-                    entry.target.classList.add('active');
-                    
-                    // 스크롤 위치에 따른 추가 애니메이션
-                    const handleScroll = () => {
-                        const rect = entry.target.getBoundingClientRect();
-                        const scrollProgress = 1 - (rect.top / window.innerHeight);
-                        
-                        if (scrollProgress > 0 && scrollProgress < 1) {
-                            entry.target.style.transform = `translateY(${scrollProgress * -50}px) scale(${1 + scrollProgress * 0.05})`;
-                        }
-                    };
-
-                    window.addEventListener('scroll', handleScroll);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        labImages.forEach(img => {
-            observer.observe(img);
-        });
-    }
-
-    // Case Detail 페이지 스크롤 회전 애니메이션
-    const topImage = document.querySelector('.case-detail-top-img');
-    if (topImage) {
-        let lastScrollPosition = 0; // 마지막 스크롤 위치 저장
-        let isAnimationComplete = false; // 애니메이션 완료 여부
-
-        window.addEventListener('scroll', () => {
-            const currentScrollPosition = window.scrollY;
-            
-            // 애니메이션이 완료되지 않았고, 스크롤을 내릴 때만 애니메이션 적용
-            if (!isAnimationComplete && currentScrollPosition > lastScrollPosition) {
-                const maxScroll = 500; // 최대 스크롤 위치
-                const rotation = Math.min(currentScrollPosition / maxScroll * 120, 120); // 최대 120도 회전
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
                 
-                // -120도에서 시작하여 0도까지 회전
-                topImage.style.transform = `rotate(${-120 + rotation}deg)`;
+                const handleScroll = () => {
+                    const rect = entry.target.getBoundingClientRect();
+                    const scrollProgress = 1 - (rect.top / window.innerHeight);
+                    
+                    if (scrollProgress > 0 && scrollProgress < 1) {
+                        entry.target.style.transform = `translateY(${scrollProgress * -50}px) scale(${1 + scrollProgress * 0.05})`;
+                    }
+                };
 
-                // 스크롤이 500px에 도달하면 애니메이션 완료 표시
-                if (currentScrollPosition >= maxScroll) {
-                    isAnimationComplete = true;
-                }
+                window.addEventListener('scroll', handleScroll);
+                observer.unobserve(entry.target);
             }
-            
-            lastScrollPosition = currentScrollPosition;
         });
-    }
+    }, observerOptions);
 
-    // 클립보드 복사 기능
+    labImages.forEach(img => observer.observe(img));
+}
 
-    // 토스트 메시지 기능
+// ========================================
+// 클립보드 복사 기능
+// ========================================
+
+function initClipboardCopy() {
     const copyButtons = document.querySelectorAll('.copy-btn');
     const toastMessage = document.querySelector('.toast-message');
     
+    if (copyButtons.length === 0) return;
+    
     copyButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // 버튼의 형제 요소인 a 태그의 텍스트 가져오기
+        button.addEventListener('click', async () => {
             const textToCopy = button.previousElementSibling.textContent;
             
-            // 클립보드에 복사
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                // 복사 성공 시 버튼 스타일 변경 (선택사항)
+            try {
+                await navigator.clipboard.writeText(textToCopy);
                 button.classList.add('copied');
                 
-                // 1초 후 버튼 스타일 원래대로 복구
                 setTimeout(() => {
                     button.classList.remove('copied');
                 }, 1000);
-            }).catch(err => {
+            } catch (err) {
                 console.error('클립보드 복사 실패:', err);
-            });
+            }
 
-            toastMessage.classList.add('show');
-            
-            // 2.5초 후 show 클래스 제거
-            setTimeout(() => {
-                toastMessage.classList.remove('show');
-            }, 2500);
+            if (toastMessage) {
+                toastMessage.classList.add('show');
+                setTimeout(() => {
+                    toastMessage.classList.remove('show');
+                }, 2500);
+            }
         });
     });
+}
 
+// ========================================
+// 모바일 네비게이션
+// ========================================
+
+function initMobileNavigation() {
     const hamburger = document.querySelector('.hamburger-menu');
     const nav = document.querySelector('.main-nav');
-
+    
+    if (!hamburger || !nav) return;
+    
     hamburger.addEventListener('click', function() {
         nav.classList.toggle('active');
         hamburger.classList.toggle('active');
     });
+}
+
+// ========================================
+// 메인 초기화
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    initHeroAnimation();
+    initCaseDetailAnimation();
+    initCaseDetailScrollAnimation();
+    initLabAnimation();
+    initClipboardCopy();
+    initMobileNavigation();
 }); 
