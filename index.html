@@ -6,18 +6,21 @@
     <title>Meta UX Lab</title>
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">    
 </head>
 <body>
     <div class="container">
         <header>
             <a href="index.html">
                 <img src="assets/img/logo.png" alt="mul">
+                <img src="assets/img/logo02.png" alt="mul">
             </a>
             <nav>
                 <ul>
                     <li><a href="case.html">case</a></li>
                     <li><a href="lab.html">lab</a></li>
                     <li><a href="contact.html">contact</a></li>
+                    <li><a href="#">brochure</a></li>
                 </ul>
             </nav>
         </header>
@@ -37,13 +40,41 @@
                 </div>
 
                 <div class="bnr-case-container">
-                    <a href="#" class="txt_link"><img src="assets/img/txt_link.png" alt=""></a>
-                    <a href="case_detail/mois.html" class="bnr-case"><img src="assets/img/main_bnr_mois.png" alt=""></a>
+                    <a href="uxforai.html" class="txt_link"><img src="assets/img/txt_link.png" alt=""></a>
+                    
+                    <div class="bnr-swiper swiper"> 
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <a href="case_detail/mois.html" class="bnr-case">
+                                    <img src="assets/img/main_bnr_mois_on.png" alt="모바일신분증">
+                                </a>        
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="case_detail/nexttrade.html" class="bnr-case">
+                                    <img src="assets/img/main_bnr_nexttrade_on.png" alt="넥스트트레이드">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="case_detail/incheonair.html" class="bnr-case">
+                                    <img src="assets/img/main_bnr_incheon_air_on.png" alt="인천공항">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>                
             </section>
         </main>
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            direction: "vertical",
+            loop: true,
+            autoplay: true,
+            speed: 1000
+        });
+    </script>
 </body>
 </html>
