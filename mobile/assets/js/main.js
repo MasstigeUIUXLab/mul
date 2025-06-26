@@ -107,6 +107,51 @@ function initMobileNavigation() {
 }
 
 // ========================================
+// Top 버튼 스크롤 기능
+// ========================================
+
+function initTopButton() {
+    const topButton = document.querySelector('.top-btn');
+    if (!topButton) return;    
+    
+    // Top 버튼 클릭 시 최상단으로 스크롤
+    topButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // 부드러운 스크롤 애니메이션
+        const startPosition = window.pageYOffset;
+        const targetPosition = 0;
+        const distance = targetPosition - startPosition;
+        const duration = 1000;
+        let startTime = null;
+        
+        function animateScroll(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            // easeInOutCubic 이징 함수
+            const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+            const easedProgress = easeInOutCubic(progress);
+            
+            window.scrollTo(0, startPosition + distance * easedProgress);
+            
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            }
+        }
+        
+        requestAnimationFrame(animateScroll);
+    });
+    
+    // 스크롤 이벤트 리스너
+    window.addEventListener('scroll', toggleTopButton, { passive: true });
+    
+    // 초기 상태 설정
+    toggleTopButton();
+}
+
+// ========================================
 // 메인 초기화
 // ========================================
 
@@ -115,4 +160,5 @@ document.addEventListener('DOMContentLoaded', function() {
     initCaseDetailAnimation();
     initClipboardCopy();
     initMobileNavigation();
+    initTopButton();
 }); 

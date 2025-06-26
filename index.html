@@ -36,7 +36,7 @@
                 -->
                 <div class="hero-animation">
                     <img src="assets/img/img_logic.png" alt="logic">
-                    <img src="assets/img/img_baisc.png" alt="baisc">                    
+                    <img src="assets/img/img_baisc.png" alt="baisc">                 
                 </div>
 
                 <div class="bnr-case-container">
@@ -46,17 +46,20 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <a href="case_detail/mois.html" class="bnr-case">
-                                    <img src="assets/img/main_bnr_mois_on.png" alt="모바일신분증">
+                                    <img src="assets/img/main_bnr_mois.png" alt="모바일신분증">
+                                    <img src="assets/img/main_bnr_mois_ov.png" alt="모바일신분증">
                                 </a>        
                             </div>
                             <div class="swiper-slide">
                                 <a href="case_detail/nexttrade.html" class="bnr-case">
-                                    <img src="assets/img/main_bnr_nexttrade_on.png" alt="넥스트트레이드">
+                                    <img src="assets/img/main_bnr_nexttrade.png" alt="넥스트트레이드">
+                                    <img src="assets/img/main_bnr_nexttrade_ov.png" alt="넥스트트레이드">
                                 </a>
                             </div>
                             <div class="swiper-slide">
                                 <a href="case_detail/incheonair.html" class="bnr-case">
-                                    <img src="assets/img/main_bnr_incheon_air_on.png" alt="인천공항">
+                                    <img src="assets/img/main_bnr_incheon_air.png" alt="인천공항">
+                                    <img src="assets/img/main_bnr_incheon_air_ov.png" alt="인천공항">
                                 </a>
                             </div>
                         </div>
@@ -72,7 +75,11 @@
         const swiper = new Swiper('.swiper', {
             direction: "vertical",
             loop: true,
-            autoplay: true,
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
             speed: 1000
         });
     </script>

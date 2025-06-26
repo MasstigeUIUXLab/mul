@@ -1,27 +1,78 @@
 // ========================================
-// 모바일 디바이스 감지 및 리다이렉트
+// 유틸리티 함수들
 // ========================================
 
+// 모바일 디바이스 감지 (개선된 버전)
 function checkMobileDevice() {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     const mobileRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
     const isSmallScreen = window.innerWidth <= 768;
+    //const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     
     return mobileRegex.test(userAgent) || isSmallScreen;
 }
 
+// 모바일 리다이렉트
 function redirectToMobile() {
-    const isMainPage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+    const isMainPage = window.location.pathname === '/' || 
+                      window.location.pathname.endsWith('index.html') ||
+                      window.location.pathname.endsWith('uxforai.html');
     const isMobileDevice = checkMobileDevice();
     const isNotAlreadyMobile = !window.location.pathname.includes('/mobile/');
     
     if (isMainPage && isMobileDevice && isNotAlreadyMobile) {
-        window.location.href = '/mobile/index.html';
+        // 현재 페이지 경로에 따라 적절한 모바일 페이지로 리다이렉트
+        let mobilePath = '/mobile/index.html';
+        
+        if (window.location.pathname.endsWith('uxforai.html')) {
+            // uxforai.html 페이지는 별도 모바일 버전이 없으므로 메인으로 리다이렉트
+            mobilePath = '/mobile/index.html';
+        }
+        
+        window.location.href = mobilePath;
     }
 }
 
-// 페이지 로드 시 모바일 리다이렉트 체크
-redirectToMobile();
+// 부드러운 스크롤 애니메이션
+function smoothScrollTo(targetPosition, duration = 1200, callback = null) {
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+    
+    function animateScroll(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+        const easedProgress = easeInOutCubic(progress);
+        
+        window.scrollTo(0, startPosition + distance * easedProgress);
+        
+        if (progress < 1) {
+            requestAnimationFrame(animateScroll);
+        } else if (callback) {
+            setTimeout(callback, 100);
+        }
+    }
+    
+    requestAnimationFrame(animateScroll);
+}
+
+// 현재 섹션 찾기
+function getCurrentSection(sections) {
+    const windowHeight = window.innerHeight;
+    
+    for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
+        const rect = section.getBoundingClientRect();
+        
+        if (rect.top <= windowHeight / 2 && rect.bottom >= windowHeight / 2) {
+            return i;
+        }
+    }
+    return 0;
+}
 
 // ========================================
 // 메인 애니메이션 기능
@@ -166,7 +217,7 @@ function initLabSnapScroll() {
         const startPosition = window.pageYOffset;
         const targetPosition = document.documentElement.scrollHeight - window.innerHeight;
         const distance = targetPosition - startPosition;
-        const duration = 1200;
+        const duration = 600;
         let startTime = null;
         
         function animateScroll(currentTime) {
@@ -185,7 +236,7 @@ function initLabSnapScroll() {
                 setTimeout(() => {
                     isScrolling = false;
                     document.body.classList.remove('scrolling');
-                }, 100);
+                }, 50);
             }
         }
         
@@ -196,7 +247,7 @@ function initLabSnapScroll() {
     function initWorkshopArticles() {
         workshopArticles.forEach((article, index) => {
             article.style.opacity = 0;
-            article.style.transform = 'translateY(100px)';
+            article.style.transform = 'translateY(100vh)';
             article.classList.remove('active');
         });
         currentArticleIndex = 0;
@@ -224,16 +275,23 @@ function initLabSnapScroll() {
         }
     }
     
-    // 현재 article 표시
+    // 현재 article 표시 (위로 날아가는 효과)
     function showCurrentArticle() {
         workshopArticles.forEach((article, index) => {
             if (index === currentArticleIndex) {
+                // 현재 아티클을 정상 위치로
                 article.style.opacity = 1;
                 article.style.transform = 'translateY(0)';
                 article.classList.add('active');
-            } else {
+            } else if (index < currentArticleIndex) {
+                // 이전 아티클들을 위로 완전히 날려보내기
                 article.style.opacity = 0;
-                article.style.transform = 'translateY(100px)';
+                article.style.transform = 'translateY(-100vh)';
+                article.classList.remove('active');
+            } else {
+                // 다음 아티클들을 아래로 숨기기
+                article.style.opacity = 0;
+                article.style.transform = 'translateY(100vh)';
                 article.classList.remove('active');
             }
         });
@@ -264,7 +322,7 @@ function initLabSnapScroll() {
         const startPosition = window.pageYOffset;
         const targetPosition = 0;
         const distance = targetPosition - startPosition;
-        const duration = 1000;
+        const duration = 600;
         let startTime = null;
         
         function animateScroll(currentTime) {
@@ -283,7 +341,7 @@ function initLabSnapScroll() {
                 setTimeout(() => {
                     isScrolling = false;
                     document.body.classList.remove('scrolling');
-                }, 100);
+                }, 50);
             }
         }
         
@@ -301,10 +359,10 @@ function initLabSnapScroll() {
         
         // 첫 번째 섹션의 위치에서 헤더 높이만큼 위로 이동하되, 
         // 헤더가 완전히 보이도록 약간의 여백을 추가
-        const targetPosition = Math.max(0, firstSection.offsetTop - HEADER_HEIGHT - 20);
+        const targetPosition = Math.max(0, firstSection.offsetTop - HEADER_HEIGHT - 60);
         const startPosition = window.pageYOffset;
         const distance = targetPosition - startPosition;
-        const duration = 1200;
+        const duration = 600;
         let startTime = null;
         
         function animateScroll(currentTime) {
@@ -323,7 +381,7 @@ function initLabSnapScroll() {
                 setTimeout(() => {
                     isScrolling = false;
                     document.body.classList.remove('scrolling');
-                }, 100);
+                }, 50);
             }
         }
         
@@ -355,7 +413,7 @@ function initLabSnapScroll() {
         const targetPosition = targetSection.offsetTop;
         const startPosition = window.pageYOffset;
         const distance = targetPosition - startPosition;
-        const duration = 1200;
+        const duration = 600;
         let startTime = null;
         
         function animateScroll(currentTime) {
@@ -384,7 +442,7 @@ function initLabSnapScroll() {
                     if (index === 1) {
                         handleVideoSectionEnter();
                     }
-                }, 100);
+                }, 50);
             }
         }
         
@@ -495,16 +553,6 @@ function initLabSnapScroll() {
         const maxSwipeTime = 300;
         
         if (Math.abs(diff) > minSwipeDistance && touchDuration < maxSwipeTime) {
-            // Workshop 섹션에서 article 스냅 스크롤
-            if (currentSection === 4 && isWorkshopActive) {
-                if (diff > 0) { // 위로 스와이프
-                    scrollToNextArticle();
-                } else { // 아래로 스와이프
-                    scrollToPrevArticle();
-                }
-                return;
-            }
-            
             if (diff > 0) { // 위로 스와이프
                 // methodology 섹션에서 위로 스와이프하면 푸터로 이동
                 if (currentSection === 5) {
@@ -965,7 +1013,7 @@ function initLogoAnimation() {
         }, 1000);
     });
 }
-
+ 
 // ========================================
 // Top 버튼 스크롤 기능
 // ========================================
@@ -1034,6 +1082,10 @@ function initTopButton() {
 // ========================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    // 모바일 리다이렉트를 가장 먼저 실행
+    redirectToMobile();
+    
+    // 기존 초기화 함수들
     initHeroAnimation();
     initCaseDetailAnimation();    
     initLabAnimation();

@@ -6,6 +6,7 @@
     <title>Meta UX Lab</title>
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 </head>
 <body>
     <div class="container">
@@ -37,13 +38,45 @@
                     <img src="assets/img/img_baisc.png" alt="baisc">                    
                 </div>
                 
-                <div class="bnr-case-container">                    
-                    <a href="case_detail/mois.html" class="bnr-case"><img src="assets/img/main_bnr_mois.png" alt=""></a>
-                </div> 
+                <div class="bnr-case-container">
+                    <a href="uxforai.html" class="txt_link"><img src="assets/img/txt_link.png" alt=""></a>                  
+                    <div class="bnr-swiper swiper"> 
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <a href="case_detail/mois.html" class="bnr-case">
+                                    <img src="assets/img/main_bnr_mois.png" alt="모바일신분증">
+                                </a>        
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="case_detail/nexttrade.html" class="bnr-case">
+                                    <img src="assets/img/main_bnr_nexttrade.png" alt="넥스트트레이드">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="case_detail/incheonair.html" class="bnr-case">
+                                    <img src="assets/img/main_bnr_incheon_air.png" alt="인천공항">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
             </section>
         </main>
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            direction: "vertical",
+            loop: true,
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+            speed: 1000
+        });
+    </script>
 </body>
 </html>
